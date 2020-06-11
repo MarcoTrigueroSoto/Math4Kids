@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Math4Kids</string>
+    <string name="imgfrutita">frutita</string>
+    <string name="txtNambe">Nombre</string>
+    <string name="txtName2">¿Cómo te llamas?</string>
+    <string name="btnRegistrar">Jugar</string>
+    <string name="txtScore">Score</string>
+    <string name="txtJugador">Jugador</string>
+    <string name="txtScore2">Score</string>
+    <string name="txtVidas">Vidas</string>
+    <string name="txtvidas">manzana</string>
+    <string name="imgN1">numero1</string>
+    <string name="txtOperacion">Operacion</string>
+    <string name="imgN2">Numero2</string>
+    <string name="txtrespuesta">Respuesta</string>
+    <string name="btncomprobar">Comprobar</string>
+</resources>
