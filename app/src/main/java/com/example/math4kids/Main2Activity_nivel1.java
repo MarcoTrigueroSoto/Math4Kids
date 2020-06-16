@@ -2,7 +2,10 @@ package com.example.math4kids;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -138,6 +141,138 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
         }
         else{
             Toast.makeText(this, "Escriba una respuesta", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void insert(View vista){
+        AdministratorSQLHelper admin = new AdministratorSQLHelper(this, "administracion", null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+
+        String codigo = Ecodigo.getText().toString();
+        String nombre = Enombre.getText().toString();
+        String precio = Eprecio.getText().toString();
+
+        if(verificar(codigo, nombre, precio)){
+            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+
+        else{
+
+            ContentValues registro = new ContentValues();
+            registro.put("codigo", codigo);
+            registro.put("nombre", nombre);
+            registro.put("precio", precio);
+            db.insert("articulos",null, registro);
+
+
+            Ecodigo.setText("");
+            Enombre.setText("");
+            Eprecio.setText("");
+
+            Toast.makeText(this, "Se guardaron los datos", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+    }
+    public void update(View vista){
+        AdministratorSQLHelper admin = new AdministratorSQLHelper(this, "administracion", null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        String codigo = Ecodigo.getText().toString();
+        String nombre = Enombre.getText().toString();
+        String precio = Eprecio.getText().toString();
+
+        if(verificar(codigo, nombre, precio)){
+            Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            ContentValues registro = new ContentValues();
+            registro.put("codigo", codigo);
+            registro.put("nombre", nombre);
+            registro.put("precio", precio);
+            int cantidad = db.update("articulos", registro, "codigo="+codigo, null);
+
+
+            if(cantidad == 1){
+                Toast.makeText(this, "Se actualizó correctamente", Toast.LENGTH_SHORT).show();
+                Ecodigo.setText("");
+                Enombre.setText("");
+                Eprecio.setText("");
+
+
+            }
+            else{
+                Toast.makeText(this, "No se actualizó correctamente", Toast.LENGTH_SHORT).show();
+            }
+        }
+        db.close();
+    }
+
+    public void delete(View vista){
+        AdministratorSQLHelper admin = new AdministratorSQLHelper(this, "administracion", null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        String codigo = Ecodigo.getText().toString();
+
+        if(codigo.isEmpty()){
+            Toast.makeText(this, "No puede tener el código vacío", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            ContentValues registro = new ContentValues();
+            registro.put("codigo", codigo);
+            int cantidad = db.delete("articulos", "codigo="+codigo,null);
+            if(cantidad == 1){
+                Toast.makeText(this, "Se eliminó correctamente", Toast.LENGTH_SHORT).show();
+                Ecodigo.setText("");
+                Enombre.setText("");
+                Eprecio.setText("");
+
+
+            }
+            else{
+                Toast.makeText(this, "No se encontró el registro", Toast.LENGTH_SHORT).show();
+                Ecodigo.setText("");
+                Enombre.setText("");
+                Eprecio.setText("");
+
+            }
+
+        }
+        db.close();
+
+    }
+    public void read(View vista) {
+        AdministratorSQLHelper admin = new AdministratorSQLHelper(this, "administracion", null, 1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        String codigo = Ecodigo.getText().toString();
+        if (codigo.isEmpty()) {
+            Toast.makeText(this, "No puede tener el código vacío", Toast.LENGTH_SHORT).show();
+        } else {
+            Cursor fila = db.rawQuery("select codigo, nombre, precio from articulos where codigo = " + codigo + ";", null);
+
+            if(fila.moveToFirst()){
+
+                Enombre.setText(fila.getString(1));
+                Eprecio.setText(fila.getString(2));
+
+
+            } else {
+                Ecodigo.setText("");
+                Enombre.setText("");
+                Eprecio.setText("");
+                Toast.makeText(this, "Datos no encontrados", Toast.LENGTH_SHORT).show();
+            }
+        }
+        db.close();
+    }
+
+    public boolean verificar(String codigo, String nombre, String precio){
+        if(codigo.isEmpty() || nombre.isEmpty() || precio.isEmpty()){
+
+            return true;
+
+        }
+        else{
+
+            return false;
         }
 
     }
