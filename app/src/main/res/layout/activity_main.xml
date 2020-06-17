@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/globos"
-    tools:context=".MainActivity"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imgfrutita"
@@ -60,14 +60,18 @@
 
     <TextView
         android:id="@+id/txtScore"
-        android:layout_width="191dp"
-        android:layout_height="43dp"
-        android:layout_below="@+id/txtName"
+        android:layout_width="173dp"
+        android:layout_height="51dp"
+        android:layout_below="@+id/btnRegistrar"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="-2dp"
-        android:layout_marginRight="-2dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
+        android:layout_toEndOf="@+id/btnLimpiar"
+        android:layout_toRightOf="@+id/btnLimpiar"
         android:hint="@string/txtScore"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
