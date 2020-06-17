@@ -104,7 +104,7 @@ public class Main2Activity_nivel4 extends AppCompatActivity {
 
             }
 
-            if(result <= 40){
+            if(result <= 40 && result > -1 ){
                 for (int i = 0; i < numero.length; i++){
                     int id = getResources().getIdentifier(numero[i], "drawable", getPackageName());
                     if(randon == i){
