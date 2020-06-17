@@ -14,11 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-<<<<<<< HEAD
+
 import android.database.sqlite.SQLiteOpenHelper;
-=======
+
 import android.util.Log;
->>>>>>> baca610f71fb991d8431db5971c5df5ce29652af
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -160,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void insert(View vista){
+  /*  public void insert(View vista){
         adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "db", null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
@@ -168,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         String nombre = etnombre.getText().toString();
 
 
-        if(nombre.isEmpty())){
+        if(nombre.isEmpty()){
             Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         }
 
@@ -272,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
         db.close();
     }
 
-
+*/
 
     @Override
     public  void onBackPressed(){
