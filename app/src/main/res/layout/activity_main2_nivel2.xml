@@ -83,8 +83,8 @@
 
     <EditText
         android:id="@+id/txtRespuesta"
-        android:layout_width="146dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/imgN1"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
@@ -133,6 +133,6 @@
         android:layout_marginLeft="12dp"
         android:layout_toEndOf="@+id/txtJugador"
         android:layout_toRightOf="@+id/txtJugador"
-        android:text="@string/str_nivel_1" />
+        android:text="Nivel 2" />
 
 </RelativeLayout>

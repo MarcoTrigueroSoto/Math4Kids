@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("tagC",nombre);
                 Log.d("tagC",temp_name);
             }else{
-                temp_score = "30";
+                temp_score = "0";
                 temp_vida = "3";
                 String sql = "insert into puntaje values(?,?,?,?)";
                 DB.execSQL(sql, new Object[] {nombre,0,0,3} );
@@ -193,16 +193,18 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Escribe tu nombre para limpiar los datos", Toast.LENGTH_SHORT).show();
         }
         else{
-            int scoreBack,  best_scoreBack = 0;
+            int scoreBack= 0;
+            int best_scoreBack = 0;
             int vidaBack = 3;
             ContentValues registro = new ContentValues();
 
             registro.put("nombre", nombre);
-            registro.put("score", best_scoreBack);
+            registro.put("score", scoreBack);
             registro.put("best_score", best_scoreBack);
             registro.put("vidas", vidaBack);
 
-            int cantidad = db.update("puntaje", registro, "nombre="+nombre, null);
+           // int cantidad = db.update("puntaje", registro, "nombre="+nombre, null);
+           int cantidad =  db.update("puntaje", registro,"nombre = ?" , new  String[]{nombre});
 
             if(cantidad == 1){
 

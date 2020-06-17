@@ -33,6 +33,7 @@ public class Main2Activity_nivel2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2_nivel2);
         Intent intent = getIntent();
         vidas = Integer.parseInt(intent.getStringExtra("Vidas"));
+        nombre_jugador = (intent.getStringExtra("Jugador"));
         score = Integer.parseInt(intent.getStringExtra("Score"));
 
         Toast.makeText(this, "Nivel uno: Sumas básicas y restas de 0 a 20", Toast.LENGTH_SHORT).show();
@@ -41,6 +42,7 @@ public class Main2Activity_nivel2 extends AppCompatActivity {
         ivVidas = (ImageView) findViewById(R.id.imgVidas);
         ivUno = (ImageView) findViewById(R.id.imgN1);
         ivDos = (ImageView) findViewById(R.id.imgN2);
+        ivOperacion = (ImageView) findViewById(R.id.txtOperacion);
         etRespuesta = (EditText) findViewById(R.id.txtRespuesta);
 
         nombre_jugador = getIntent().getStringExtra("Jugador");
@@ -75,13 +77,14 @@ public class Main2Activity_nivel2 extends AppCompatActivity {
         mpGood = MediaPlayer.create(this, R.raw.wonderful);
         mpBad = MediaPlayer.create(this, R.raw.bad);
         numRandom();
+
     }
 
     public void numRandom() {
         if (score > 10 && score < 21) {
             randon = new Random().nextInt(21);
             randon2 = new Random().nextInt(21);
-            randomOper = new Random().nextInt(3);
+            randomOper = new Random().nextInt(2);
 
             switch (randomOper) {
 
@@ -97,7 +100,7 @@ public class Main2Activity_nivel2 extends AppCompatActivity {
 
             }
 
-            if (result <= 20) {
+            if (result <= 20 && result >=0) {
                 for (int i = 0; i < numero.length; i++) {
                     int id = getResources().getIdentifier(numero[i], "drawable", getPackageName());
                     if (randon == i) {

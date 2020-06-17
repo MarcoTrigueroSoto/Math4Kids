@@ -83,8 +83,8 @@
 
     <EditText
         android:id="@+id/txtRespuesta"
-        android:layout_width="146dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/imgN1"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
