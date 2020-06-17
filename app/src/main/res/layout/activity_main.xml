@@ -41,17 +41,17 @@
         android:layout_below="@+id/txtName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:background="@drawable/adicion"
+        android:background="@drawable/fondoboton"
         android:onClick="jugar"
         android:text="@string/btnRegistrar" />
 
     <TextView
         android:id="@+id/txtScore"
-        android:layout_width="170dp"
-        android:layout_height="62dp"
+        android:layout_width="311dp"
+        android:layout_height="70dp"
         android:layout_below="@+id/btnRegistrar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="32dp"
         android:hint="@string/txtScore"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"

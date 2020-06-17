@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
         adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "db",null, 1);
         SQLiteDatabase DB = admin.getWritableDatabase();
-        Cursor consultar = DB.rawQuery("select * from puntaje where score = (select max(score) from puntaje)", null);
+        Cursor consultar = DB.rawQuery("select * from puntaje where best_score = (select max(best_score) from puntaje)", null);
 
         if(consultar.moveToFirst()){
             String temp_name = consultar.getString(0);
-            String temp_score = consultar.getString(1);
+            String temp_score = consultar.getString(2);
 
             tvScore.setText("Record: "+ temp_score+" de "+ temp_name);
         }
@@ -86,14 +87,61 @@ public class MainActivity extends AppCompatActivity {
     public void jugar(View vista){
 
         String nombre = etnombre.getText().toString();
+        String temp_name = nombre;
+        String temp_score;
+        String temp_vida;
 
         if(!nombre.isEmpty()){
+            adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "db",null, 1);
+            SQLiteDatabase DB = admin.getWritableDatabase();
+            Cursor consultar = DB.rawQuery("select * from puntaje where nombre = ?", new  String[]{temp_name});
+            if(consultar.moveToFirst()){
+                 temp_name = consultar.getString(0);
+                 temp_score = consultar.getString(1);
+                 temp_vida = consultar.getString(3);
+                Log.d("tagC",nombre);
+                Log.d("tagC",temp_name);
+            }else{
+                temp_score = "30";
+                temp_vida = "3";
+                String sql = "insert into puntaje values(?,?,?,?)";
+                DB.execSQL(sql, new Object[] {nombre,0,0,3} );
+                Log.d("tagE",nombre);
+                Log.d("tagE",temp_name);
+            }
+            DB.close();
             mp.stop();
             mp.release();
-            Intent intent = new Intent(this, Main2Activity_nivel1.class);
-            intent.putExtra("Jugador", nombre);
-            startActivity(intent);
-            finish();
+            if(Integer.parseInt(temp_score)>=0 && Integer.parseInt(temp_score) < 10){
+                Intent intent = new Intent(this, Main2Activity_nivel1.class);
+                intent.putExtra("Jugador", temp_name);
+                intent.putExtra("Score", temp_score);
+                intent.putExtra("Vidas", temp_vida);
+                startActivity(intent);
+                finish();
+            } else if(Integer.parseInt(temp_score)>=10 && Integer.parseInt(temp_score) < 20){
+                Intent intent = new Intent(this, Main2Activity_nivel1.class);
+                intent.putExtra("Jugador", temp_name);
+                intent.putExtra("Score", temp_score);
+                intent.putExtra("Vidas", temp_vida);
+                startActivity(intent);
+                finish();
+            }else if(Integer.parseInt(temp_score)>=20 && Integer.parseInt(temp_score) < 30){
+                Intent intent = new Intent(this, Main2Activity_nivel1.class);
+                intent.putExtra("Jugador", temp_name);
+                intent.putExtra("Score", temp_score);
+                intent.putExtra("Vidas", temp_vida);
+                startActivity(intent);
+                finish();
+            }else if(Integer.parseInt(temp_score)>=30){
+                Intent intent = new Intent(this, Main2Activity_nivel4.class);
+                intent.putExtra("Jugador", temp_name);
+                intent.putExtra("Score", temp_score);
+                intent.putExtra("Vidas", temp_vida);
+                startActivity(intent);
+                finish();
+            }
+
 
         }else{
             Toast.makeText(this, "Escribe tu nombre primero", Toast.LENGTH_SHORT).show();

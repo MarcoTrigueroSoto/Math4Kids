@@ -14,4 +14,5 @@
     <string name="imgN2">Numero2</string>
     <string name="txtrespuesta">Respuesta</string>
     <string name="btncomprobar">Comprobar</string>
+    <string name="str_nivel_1">Nivel 1</string>
 </resources>

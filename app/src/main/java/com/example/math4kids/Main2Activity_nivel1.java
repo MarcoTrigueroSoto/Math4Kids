@@ -16,12 +16,14 @@ import android.widget.Toast;
 
 public class Main2Activity_nivel1 extends AppCompatActivity {
 
+
     private TextView tvNombre, tvScore;
     private ImageView ivUno, ivDos,ivVidas;
     private EditText etRespuesta;
     private MediaPlayer mp,mpGood, mpBad;
 
-    private int score, randon, randon2, result, vidas=3;
+    private int randon, randon2, result, vidas, score;
+
     String nombre_jugador, string_score, string_vidas;
 
     String numero[] = {"cero","uno","dos","tres","cuatro","cinco","seis","siete","ocho","nueve"};
@@ -30,6 +32,9 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2_nivel1);
+        Intent intent = getIntent();
+        vidas= Integer.parseInt(intent.getStringExtra("Vidas"));
+        score= Integer.parseInt(intent.getStringExtra("Score"));
 
         Toast.makeText(this, "Nivel uno: Sumas básicas", Toast.LENGTH_SHORT).show();
         tvNombre = (TextView) findViewById(R.id.txtJugador);
@@ -42,8 +47,25 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
         nombre_jugador = getIntent().getStringExtra("Jugador");
 
         tvNombre.setText("Jugador "+nombre_jugador);
+        tvScore.setText("Score: "+score);
+        switch (vidas){
+            case 3:
+                ivVidas.setImageResource(R.drawable.tresvidas);
+                break;
+            case 2:
+                Toast.makeText(this, "Quedan 2 vidas", Toast.LENGTH_SHORT).show();
+                ivVidas.setImageResource(R.drawable.dosvidas);
+                break;
+
+            case 1:
+                Toast.makeText(this, "Queda 1 vida", Toast.LENGTH_SHORT).show();
+                ivVidas.setImageResource(R.drawable.unavida);
+                break;
+
+        }
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+
 
         mp = MediaPlayer.create(this, R.raw.goats);
         mp.start();
@@ -84,9 +106,9 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
             Intent intent = new Intent(this, Main2Activity_nivel2.class);
             string_score = String.valueOf(score);
             string_vidas = String.valueOf(vidas);
-            intent.putExtra("jugador", nombre_jugador);
-            intent.putExtra("vidas", string_vidas);
-            intent.putExtra("score", string_score);
+            intent.putExtra("Jugador", nombre_jugador);
+            intent.putExtra("Vidas", string_vidas);
+            intent.putExtra("Score", string_score);
             startActivity(intent);
             finish();
             mp.stop();
@@ -144,7 +166,7 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
         }
 
     }
-
+/*
     public void insert(View vista){
         AdministratorSQLHelper admin = new AdministratorSQLHelper(this, "administracion", null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
@@ -277,5 +299,5 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
 
     }
 
-
+*/
 }

@@ -6,7 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/globos"
-    tools:context=".Main2Activity_nivel1">
+    tools:context=".Main2Activity_nivel4">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_toEndOf="@+id/txtJugador"
+        android:layout_toRightOf="@+id/txtJugador"
+        android:text="@string/str_nivel_1"
+        tools:text="Nivel 4" />
 
     <TextView
         android:id="@+id/txtScore"
@@ -124,15 +135,5 @@
         android:text="@string/txtJugador"
         android:textColor="#000000"
         android:textColorHint="#000000" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_toEndOf="@+id/txtJugador"
-        android:layout_toRightOf="@+id/txtJugador"
-        android:text="@string/str_nivel_1" />
 
 </RelativeLayout>
