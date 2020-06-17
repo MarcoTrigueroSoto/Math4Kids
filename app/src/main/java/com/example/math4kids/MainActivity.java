@@ -158,6 +158,41 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void limpiar(View vista){
+        adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "db", null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        String nombre = etnombre.getText().toString();
+
+        /*btnLimpiar= findViewById(R.id.btnLimpiar);
+        btnLimpiar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                limpiar(v);
+            }
+        });*/
+
+
+        if(nombre.isEmpty()){
+            Toast.makeText(this, "Escribe tu nombre para limpiar los datos", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            ContentValues registro = new ContentValues();
+
+            registro.put("score", 0);
+            registro.put("vida", 3);
+
+            //int cantidad = db.update("puntaje", registro, "nombre="+nombre, null);
+            int cantidad =  db.update("puntaje", registro,"nombre = ?" , new  String[]{nombre});
+
+            if(cantidad == 1){
+
+                Toast.makeText(this, "Se reinicio la puntuación del usuario", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "No se pudo reiniciar la puntuación correctamente", Toast.LENGTH_SHORT).show();
+            }
+        }
+        db.close();
+    }
 
     @Override
     public  void onBackPressed(){

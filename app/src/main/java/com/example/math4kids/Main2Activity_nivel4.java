@@ -67,7 +67,7 @@ public class Main2Activity_nivel4 extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
-        mp = MediaPlayer.create(this, R.raw.megamanandbassmuseum);
+        mp = MediaPlayer.create(this, R.raw.supermetroidridley);
         mp.start();
         mp.setLooping(true);
 
