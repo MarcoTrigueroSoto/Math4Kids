@@ -16,9 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import android.util.Log;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(consultar.moveToFirst()){
             String temp_name = consultar.getString(0);
-            String temp_score = consultar.getString(2);
-
+           /* String temp_score = consultar.getString(2);*/
+            String temp_score = "30";
             tvScore.setText("Record: "+ temp_score+" de "+ temp_name);
         }
         DB.close();
@@ -133,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }else if(Integer.parseInt(temp_score)>=20 && Integer.parseInt(temp_score) < 30){
-                Intent intent = new Intent(this, Main2Activity_nivel1.class);
+                Intent intent = new Intent(this, Main2Activity_nivel3.class);
                 intent.putExtra("Jugador", temp_name);
                 intent.putExtra("Score", temp_score);
                 intent.putExtra("Vidas", temp_vida);
@@ -160,41 +158,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void limpiar(View vista){
-        adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "db", null,1);
-        SQLiteDatabase db = admin.getWritableDatabase();
-        String nombre = etnombre.getText().toString();
-
-        /*btnLimpiar= findViewById(R.id.btnLimpiar);
-        btnLimpiar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                limpiar(v);
-            }
-        });*/
-
-
-        if(nombre.isEmpty()){
-            Toast.makeText(this, "Escribe tu nombre para limpiar los datos", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            ContentValues registro = new ContentValues();
-
-            registro.put("score", 0);
-            registro.put("vida", 3);
-
-            //int cantidad = db.update("puntaje", registro, "nombre="+nombre, null);
-           int cantidad =  db.update("puntaje", registro,"nombre = ?" , new  String[]{nombre});
-
-            if(cantidad == 1){
-
-                Toast.makeText(this, "Se reinicio la puntuación del usuario", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(this, "No se pudo reiniciar la puntuación correctamente", Toast.LENGTH_SHORT).show();
-            }
-        }
-        db.close();
-    }
 
     @Override
     public  void onBackPressed(){
