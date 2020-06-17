@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView im_personaje;
     private TextView tvScore;
     private MediaPlayer mp;
+
 
     int random = (int) (Math.random() * 10);
 
@@ -82,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         mp = MediaPlayer.create(this, R.raw.alphabet_song);
         mp.start();
         mp.setLooping(true);
-
 
 
 
@@ -159,51 +160,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void insert(View vista){
-        adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "db", null,1);
-        SQLiteDatabase db = admin.getWritableDatabase();
-
-
-        String nombre = etnombre.getText().toString();
-
-
-        if(nombre.isEmpty()){
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-        }
-
-        else{
-
-            ContentValues registro = new ContentValues();
-
-            registro.put("nombre", nombre);
-            db.insert("articulos",null, registro);
-
-            Toast.makeText(this, "Se guardaron los datos", Toast.LENGTH_SHORT).show();
-        }
-        db.close();
-    }
-
     public void limpiar(View vista){
         adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "db", null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
         String nombre = etnombre.getText().toString();
+
+        /*btnLimpiar= findViewById(R.id.btnLimpiar);
+        btnLimpiar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                limpiar(v);
+            }
+        });*/
 
 
         if(nombre.isEmpty()){
             Toast.makeText(this, "Escribe tu nombre para limpiar los datos", Toast.LENGTH_SHORT).show();
         }
         else{
-            int scoreBack= 0;
-            int best_scoreBack = 0;
-            int vidaBack = 3;
             ContentValues registro = new ContentValues();
 
-            registro.put("nombre", nombre);
-            registro.put("score", scoreBack);
-            registro.put("best_score", best_scoreBack);
-            registro.put("vidas", vidaBack);
+            registro.put("score", 0);
+            registro.put("vida", 3);
 
-           // int cantidad = db.update("puntaje", registro, "nombre="+nombre, null);
+            //int cantidad = db.update("puntaje", registro, "nombre="+nombre, null);
            int cantidad =  db.update("puntaje", registro,"nombre = ?" , new  String[]{nombre});
 
             if(cantidad == 1){
