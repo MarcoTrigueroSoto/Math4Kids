@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(consultar.moveToFirst()){
             String temp_name = consultar.getString(0);
-            String temp_score = consultar.getString(2);
-
+           /* String temp_score = consultar.getString(2);*/
+            String temp_score = "30";
             tvScore.setText("Record: "+ temp_score+" de "+ temp_name);
         }
         DB.close();
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("tagC",nombre);
                 Log.d("tagC",temp_name);
             }else{
-                temp_score = "30";
+                temp_score = "0";
                 temp_vida = "3";
                 String sql = "insert into puntaje values(?,?,?,?)";
                 DB.execSQL(sql, new Object[] {nombre,0,0,3} );
@@ -127,14 +127,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else if(Integer.parseInt(temp_score)>=10 && Integer.parseInt(temp_score) < 20){
-                Intent intent = new Intent(this, Main2Activity_nivel1.class);
+                Intent intent = new Intent(this, Main2Activity_nivel2.class);
                 intent.putExtra("Jugador", temp_name);
                 intent.putExtra("Score", temp_score);
                 intent.putExtra("Vidas", temp_vida);
                 startActivity(intent);
                 finish();
             }else if(Integer.parseInt(temp_score)>=20 && Integer.parseInt(temp_score) < 30){
-                Intent intent = new Intent(this, Main2Activity_nivel1.class);
+                Intent intent = new Intent(this, Main2Activity_nivel3.class);
                 intent.putExtra("Jugador", temp_name);
                 intent.putExtra("Score", temp_score);
                 intent.putExtra("Vidas", temp_vida);
