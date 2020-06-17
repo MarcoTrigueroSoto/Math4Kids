@@ -14,9 +14,6 @@
     <string name="imgN2">Numero2</string>
     <string name="txtrespuesta">Respuesta</string>
     <string name="btncomprobar">Comprobar</string>
-<<<<<<< HEAD
     <string name="btnLimpiar">Limpiar datos</string>
-=======
     <string name="str_nivel_1">Nivel 1</string>
->>>>>>> baca610f71fb991d8431db5971c5df5ce29652af
 </resources>

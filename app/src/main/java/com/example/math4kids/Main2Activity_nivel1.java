@@ -32,6 +32,7 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2_nivel1);
+
         Intent intent = getIntent();
         vidas= Integer.parseInt(intent.getStringExtra("Vidas"));
         score= Integer.parseInt(intent.getStringExtra("Score"));
@@ -48,6 +49,7 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
 
         tvNombre.setText("Jugador "+nombre_jugador);
         tvScore.setText("Score: "+score);
+
         switch (vidas){
             case 3:
                 ivVidas.setImageResource(R.drawable.tresvidas);
@@ -83,7 +85,7 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
     }
 
     public void numRandom(){
-        if(score < 10){
+        if(score < 11){
             randon =(int) (Math.random()*10);
             randon2 =(int) (Math.random()*10);
 
@@ -123,45 +125,72 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
     public void comprobar(View vista){
         String respuesta = etRespuesta.getText().toString();
         if(!respuesta.isEmpty()){
-                int resInt = Integer.parseInt(respuesta);
-                if(result == resInt){
-                    mpGood.start();
-                    score++;
-                    tvScore.setText("Score: "+score);
+            adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "db",null, 1);
+            SQLiteDatabase DB = admin.getWritableDatabase();
+            int resInt = Integer.parseInt(respuesta);
+            if(result == resInt){
+                mpGood.start();
+                score++;
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("score",score);
+                DB.update("puntaje", contentValues, "nombre = ?" , new  String[]{nombre_jugador});
+                DB.close();
+                tvScore.setText("Score: "+score);
 
-                }
-                else{
-                    mpBad.start();
-                    vidas--;
-                    switch (vidas){
+            }
+            else{
+                mpBad.start();
+                vidas--;
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("vida",vidas);
+                DB.update("puntaje", contentValues, "nombre = ?" , new  String[]{nombre_jugador});
+                switch (vidas){
+
                     case 3:
+                        DB.close();
                         ivVidas.setImageResource(R.drawable.tresvidas);
                         break;
+
                     case 2:
+                        DB.close();
                         Toast.makeText(this, "Quedan 2 vidas", Toast.LENGTH_SHORT).show();
                         ivVidas.setImageResource(R.drawable.dosvidas);
                         break;
 
                     case 1:
+                        DB.close();
                         Toast.makeText(this, "Queda 1 vida", Toast.LENGTH_SHORT).show();
                         ivVidas.setImageResource(R.drawable.unavida);
-                     break;
+                        break;
 
                     case 0:
+                        Cursor consultar = DB.rawQuery("select * from puntaje where nombre = ?", new  String[]{nombre_jugador});
+                        if(consultar.moveToFirst()){
+                            String temp_best_score = consultar.getString(2);
+                            if (score > Integer.parseInt(temp_best_score)){
+                                contentValues.put("vida",3);
+                                contentValues.put("best_score",score);
+                                contentValues.put("score",0);
+                                DB.update("puntaje", contentValues, "nombre = ? ", new  String[]{nombre_jugador});
+                            }else{
+                                contentValues.put("vida",3);
+                                contentValues.put("score",0);
+                                DB.update("puntaje", contentValues, "nombre = ?" , new  String[]{nombre_jugador});
+                            }
+                        }
+                        DB.close();
                         Toast.makeText(this, "Ya no te quedan vidas", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
-
                         mp.stop();
                         mp.release();
-
                         finish();
                         break;
 
-                    }
                 }
-        etRespuesta.setText("");
-        numRandom();
+            }
+            etRespuesta.setText("");
+            numRandom();
         }
         else{
             Toast.makeText(this, "Escriba una respuesta", Toast.LENGTH_SHORT).show();
@@ -231,75 +260,7 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
         db.close();
     }
 
-    public void delete(View vista){
-        AdministratorSQLHelper admin = new AdministratorSQLHelper(this, "administracion", null,1);
-        SQLiteDatabase db = admin.getWritableDatabase();
-        String codigo = Ecodigo.getText().toString();
 
-        if(codigo.isEmpty()){
-            Toast.makeText(this, "No puede tener el código vacío", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            ContentValues registro = new ContentValues();
-            registro.put("codigo", codigo);
-            int cantidad = db.delete("articulos", "codigo="+codigo,null);
-            if(cantidad == 1){
-                Toast.makeText(this, "Se eliminó correctamente", Toast.LENGTH_SHORT).show();
-                Ecodigo.setText("");
-                Enombre.setText("");
-                Eprecio.setText("");
-
-
-            }
-            else{
-                Toast.makeText(this, "No se encontró el registro", Toast.LENGTH_SHORT).show();
-                Ecodigo.setText("");
-                Enombre.setText("");
-                Eprecio.setText("");
-
-            }
-
-        }
-        db.close();
-
-    }
-    public void read(View vista) {
-        AdministratorSQLHelper admin = new AdministratorSQLHelper(this, "administracion", null, 1);
-        SQLiteDatabase db = admin.getWritableDatabase();
-        String codigo = Ecodigo.getText().toString();
-        if (codigo.isEmpty()) {
-            Toast.makeText(this, "No puede tener el código vacío", Toast.LENGTH_SHORT).show();
-        } else {
-            Cursor fila = db.rawQuery("select codigo, nombre, precio from articulos where codigo = " + codigo + ";", null);
-
-            if(fila.moveToFirst()){
-
-                Enombre.setText(fila.getString(1));
-                Eprecio.setText(fila.getString(2));
-
-
-            } else {
-                Ecodigo.setText("");
-                Enombre.setText("");
-                Eprecio.setText("");
-                Toast.makeText(this, "Datos no encontrados", Toast.LENGTH_SHORT).show();
-            }
-        }
-        db.close();
-    }
-
-    public boolean verificar(String codigo, String nombre, String precio){
-        if(codigo.isEmpty() || nombre.isEmpty() || precio.isEmpty()){
-
-            return true;
-
-        }
-        else{
-
-            return false;
-        }
-
-    }
 
 */
 }

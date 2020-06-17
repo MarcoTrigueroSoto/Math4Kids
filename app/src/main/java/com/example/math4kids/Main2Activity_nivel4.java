@@ -32,6 +32,7 @@ public class Main2Activity_nivel4 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2_nivel1);
+
         Intent intent = getIntent();
         vidas= Integer.parseInt(intent.getStringExtra("Vidas"));
         score= Integer.parseInt(intent.getStringExtra("Score"));
