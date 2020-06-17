@@ -129,8 +129,10 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
                         Toast.makeText(this, "Ya no te quedan vidas", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
+
                         mp.stop();
                         mp.release();
+
                         finish();
                         break;
 
@@ -146,7 +148,7 @@ public class Main2Activity_nivel1 extends AppCompatActivity {
     }
 
     public void insert(View vista){
-        AdministratorSQLHelper admin = new AdministratorSQLHelper(this, "administracion", null,1);
+        adminsqliteopenhelper admin = new adminsqliteopenhelper(this, "administracion", null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
         String codigo = Ecodigo.getText().toString();
